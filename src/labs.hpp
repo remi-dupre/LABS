@@ -26,3 +26,25 @@ double energy(const Sequence& seq);
 /* Compute the merit factor F(seq) of a sequence.
  */
 double merit(const Sequence& seq);
+
+
+/* Helper to count number of requests while running an optimization algorithm.
+ */
+class LabsInstance {
+public:
+    /* Init the instance for a given size of sequence.
+     */
+    LabsInstance(int seq_size);
+
+    /* Get the merit factor of a sequence
+     */
+    double eval(const Sequence& seq);
+
+    /* Get the number of requests so far
+     */
+    long long int get_nb_requests() const;
+
+private:
+    int seq_size;
+    long long int request_counter;
+};

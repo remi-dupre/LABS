@@ -18,7 +18,7 @@ double autocorrelation(const Sequence& seq, int k)
     double result = 0;
 
     for (int i = 0 ; i < seq.size() - k ; i++)
-        result += s[i] * s[i+k];
+        result += seq[i] * seq[i+k];
 
     return result;
 }
@@ -29,7 +29,7 @@ double energy(const Sequence& seq)
 
     double result = 0;
 
-    for (int k = 0 ; k < N ; k++) {
+    for (int k = 1 ; k < seq.size() ; k++) {
         const double c_k = autocorrelation(seq, k);
         result += c_k * c_k;
     }
@@ -42,4 +42,24 @@ double merit(const Sequence& seq)
     assert(is_valid_sequence(seq));
 
     return (seq.size() * seq.size()) / (2 * energy(seq));
+}
+
+
+LabsInstance::LabsInstance(int seq_size) :
+    seq_size(seq_size),
+    request_counter(0)
+{}
+
+double LabsInstance::eval(const Sequence& seq)
+{
+    assert(is_valid_sequence(seq));
+    assert(seq.size() == seq_size);
+
+    request_counter++;
+    return merit(seq);
+}
+
+long long int LabsInstance::get_nb_requests() const
+{
+    return request_counter;
 }
