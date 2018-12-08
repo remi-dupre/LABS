@@ -2,8 +2,8 @@
 
 
 Optimizer::Optimizer(int seq_size, int seed) :
-    random_engine(seed),
-    seq_size(seq_size)
+    seq_size(seq_size),
+    random_engine(seed)
 {}
 
 Sequence Optimizer::run()

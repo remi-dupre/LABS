@@ -13,11 +13,11 @@ bool is_valid_sequence(const Sequence& seq)
 double autocorrelation(const Sequence& seq, int k)
 {
     assert(is_valid_sequence(seq));
-    assert(k >= 0 && k < seq.size());
+    assert(k >= 0 && k < (int) seq.size());
 
     double result = 0;
 
-    for (int i = 0 ; i < seq.size() - k ; i++)
+    for (size_t i = 0 ; i < seq.size() - k ; i++)
         result += seq[i] * seq[i+k];
 
     return result;
@@ -29,7 +29,7 @@ double energy(const Sequence& seq)
 
     double result = 0;
 
-    for (int k = 1 ; k < seq.size() ; k++) {
+    for (size_t k = 1 ; k < seq.size() ; k++) {
         const double c_k = autocorrelation(seq, k);
         result += c_k * c_k;
     }
@@ -53,7 +53,7 @@ LabsInstance::LabsInstance(int seq_size) :
 double LabsInstance::eval(const Sequence& seq)
 {
     assert(is_valid_sequence(seq));
-    assert(seq.size() == seq_size);
+    assert((int) seq.size() == seq_size);
 
     request_counter++;
     return merit(seq);
