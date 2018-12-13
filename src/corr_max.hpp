@@ -1,4 +1,4 @@
-/* Try to localy increase the enery by reducing the maximal autocorrelation
+/* Try to localy increase the enery by reducing a targeted autocorrelation
  * coefficient.
  */
 #pragma once
