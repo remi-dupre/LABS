@@ -1,7 +1,12 @@
 #pragma once
 
+#include <chrono>
+#include <map>
 #include <random>
+#include <string>
+#include <iostream>
 
+#include "json.hpp"
 #include "labs.hpp"
 
 
@@ -10,6 +15,12 @@
  */
 class Optimizer {
     public:
+        /* Name of the algorithm */
+        std::string name = "unnamed";
+
+        /* Extra parameters for the algorithm */
+        std::map<std::string, double> params;
+
         Optimizer(int seq_size, int seed);
 
         /* Run the algorithm once and return the computed sequence */
@@ -19,12 +30,17 @@ class Optimizer {
          * requests */
         virtual Sequence run(LabsInstance& instance) = 0;
 
+        /* Test routines */
+        void json_benchmark();
+
     protected:
+
         /* Return a random sequence according to uniform distribution */
         Sequence random_sequence();
 
         int seq_size;  // size of sequences generated
         std::default_random_engine random_engine;  // for randomization
+
 };
 
 
@@ -33,8 +49,11 @@ class Optimizer {
  */
 class ExampleOpt : public Optimizer {
     public:
-        using Optimizer::Optimizer;
         using Optimizer::run;
 
+        ExampleOpt(int seq_size, int seed, int nb_iter = 10000);
+
         Sequence run(LabsInstance& instance);
+
+    private:
 };

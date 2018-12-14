@@ -44,7 +44,12 @@ public:
      */
     long long int get_nb_requests() const;
 
+    /* Get the list of requested sequences so far
+     */
+    std::vector<Sequence> get_requests() const;
+
 private:
     int seq_size;
+    std::vector<Sequence> requests;
     long long int request_counter;
 };

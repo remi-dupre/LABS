@@ -46,8 +46,7 @@ double merit(const Sequence& seq)
 
 
 LabsInstance::LabsInstance(int seq_size) :
-    seq_size(seq_size),
-    request_counter(0)
+    seq_size(seq_size)
 {}
 
 double LabsInstance::eval(const Sequence& seq)
@@ -55,11 +54,16 @@ double LabsInstance::eval(const Sequence& seq)
     assert(is_valid_sequence(seq));
     assert((int) seq.size() == seq_size);
 
-    request_counter++;
+    requests.push_back(seq);
     return merit(seq);
 }
 
 long long int LabsInstance::get_nb_requests() const
 {
-    return request_counter;
+    return requests.size();
+}
+
+std::vector<Sequence> LabsInstance::get_requests() const
+{
+    return requests;
 }

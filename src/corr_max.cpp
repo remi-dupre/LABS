@@ -1,6 +1,16 @@
 #include "corr_max.hpp"
 
 
+CorrMax::CorrMax(int seq_size, int seed, int nb_iter, int threshold) :
+    Optimizer(seq_size, seed)
+{
+    name = "maximize_correlation";
+    params = {
+        {"iterations", (double) nb_iter},
+        {"threshold" , (double) threshold}
+    };
+}
+
 Sequence CorrMax::run(LabsInstance& instance)
 {
     Sequence seq = random_sequence();

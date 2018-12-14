@@ -1,5 +1,6 @@
 #include <iostream>
 #include <random>
+#include <vector>
 
 #include "labs.hpp"
 #include "optimizer.hpp"
@@ -12,19 +13,13 @@ int main()
 {
     random_device rd;
 
-    ExampleOpt opt(300, rd());
-    Sequence res = opt.run();
-
-    for (int x : res) cout <<(x < 0 ? '-' : '+');
-
-    cout << endl << merit(res) << endl;
-
-    //
-
-    CorrMax corr_max(300, rd());
-    res = corr_max.run();
-
-    for (int x : res) cout <<(x < 0 ? '-' : '+');
-
-    cout << endl << merit(res) << endl;
+    cout << "[";
+    ExampleOpt(300, rd(), 10000).json_benchmark();
+    cout << ",\n";
+    CorrMax(300, rd(), 10000, 1).json_benchmark();
+    cout << ",\n";
+    CorrMax(300, rd(), 10000, 10).json_benchmark();
+    cout << ",\n";
+    CorrMax(300, rd(), 10000, 100).json_benchmark();
+    cout << "]" << endl;
 }

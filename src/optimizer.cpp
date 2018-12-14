@@ -23,12 +23,43 @@ Sequence Optimizer::random_sequence()
     return seq;
 }
 
+void Optimizer::json_benchmark()
+{
+    // Run an instance of labs
+    const auto start = std::chrono::system_clock::now();
+    LabsInstance instance(seq_size);
+    const auto seq = run(instance);
+    const auto end = std::chrono::system_clock::now();
+
+    const std::chrono::duration<double> duration = end - start;
+
+    // Output result
+    std::cout << "{" << std::endl;
+
+    std::cout << "\t" << json_value("name", name) << ",\n";
+    std::cout << "\t" << json_value("params", params) << ",\n";
+    std::cout << "\t" << json_value("dim", seq_size) << ",\n";
+    std::cout << "\t" << json_value("running_time", duration.count()) << ",\n";
+    std::cout << "\t" << json_value("output", seq) << ",\n";
+    std::cout << "\t" << json_value("merit", merit(seq)) << "\n";
+    // std::cout << "\t" << json_value("steps", instance.get_requests()) << ",\n";
+
+    std::cout << "}";
+}
+
+ExampleOpt::ExampleOpt(int seq_size, int seed, int nb_iter) :
+    Optimizer(seq_size, seed)
+{
+    name = "full_random";
+    params["iterations"] = (double) nb_iter;
+}
+
 Sequence ExampleOpt::run(LabsInstance& instance)
 {
     Sequence best_seq = random_sequence();
     double best_score = instance.eval(best_seq);
 
-    for (int i = 0 ; i < 1000 ; i++) {
+    for (int i = 0 ; i < params["iterations"] ; i++) {
         Sequence new_seq = random_sequence();
         double new_score = instance.eval(new_seq);
 
