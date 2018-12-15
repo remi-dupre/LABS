@@ -94,7 +94,7 @@ void serialize_json(std::ostream& stream, const std::string& key, const std::map
 
 void serialize_json(std::ostream& stream, const std::string& key, const std::vector<std::map<std::string, double>> &value)
 {
-    stream << "\"" << key << "\": [\n";
+    stream << "\"" << key << "\": {\n";
 
     for (size_t i = 0 ; i < value.size() ; i++) {
         stream << "\t\t";
@@ -104,5 +104,5 @@ void serialize_json(std::ostream& stream, const std::string& key, const std::vec
             stream << ",\n";
     }
 
-    stream << "\n\t]";
+    stream << "\n\t}";
 }

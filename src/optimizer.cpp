@@ -25,6 +25,7 @@ Sequence Optimizer::random_sequence()
 
 void Optimizer::json_benchmark(std::ostream& stream)
 {
+    // Prompt some informations
     std::cout << " - Running `" << name << "`\n    ";
     serialize_json(std::cout, "N", seq_size);
     std::cout << "\n    ";
