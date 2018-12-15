@@ -2,21 +2,22 @@
 
 #include <iostream>
 #include <map>
+#include <sstream>
 #include <string>
 #include <vector>
 
 #include "labs.hpp"
 
 
-std::string json_value(const std::string& key, const std::string& value);
-std::string json_value(const std::string& key, int value);
-std::string json_value(const std::string& key, double value);
+void serialize_json(std::ostream& stream, const std::string& key, const std::string& value);
+void serialize_json(std::ostream& stream, const std::string& key, int value);
+void serialize_json(std::ostream& stream, const std::string& key, double value);
 
-std::string json_value_f(const std::vector<std::string>& value, std::string sep=", ");
-std::string json_value_f(const std::string& key, const std::vector<std::string>& value, std::string sep=", ");
+void serialize_json_f(std::ostream& stream, const std::vector<std::string>& value, std::string sep=", ");
+void serialize_json_f(std::ostream& stream, const std::string& key, const std::vector<std::string>& value, std::string sep=", ");
 
-std::string json_value(const Sequence& value);
-std::string json_value(const std::string& key, const Sequence& value);
-std::string json_value(const std::string& key, const std::vector<Sequence>& value);
+void serialize_json(std::ostream& stream, const Sequence& value);
+void serialize_json(std::ostream& stream, const std::string& key, const Sequence& value);
+void serialize_json(std::ostream& stream, const std::string& key, const std::vector<Sequence>& value);
 
-std::string json_value(const std::string& key, const std::map<std::string, double> &value);
+void serialize_json(std::ostream& stream, const std::string& key, const std::map<std::string, double> &value);

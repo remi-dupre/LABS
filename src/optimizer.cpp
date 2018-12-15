@@ -36,15 +36,21 @@ void Optimizer::json_benchmark()
     // Output result
     std::cout << "{" << std::endl;
 
-    std::cout << "\t" << json_value("name", name) << ",\n";
-    std::cout << "\t" << json_value("params", params) << ",\n";
-    std::cout << "\t" << json_value("dim", seq_size) << ",\n";
-    std::cout << "\t" << json_value("running_time", duration.count()) << ",\n";
-    std::cout << "\t" << json_value("output", seq) << ",\n";
-    std::cout << "\t" << json_value("merit", merit(seq)) << "\n";
-    // std::cout << "\t" << json_value("steps", instance.get_requests()) << ",\n";
+    std::cout << "\n\t";
+    serialize_json(std::cout, "name", name);
+    std::cout << ",\n\t";
+    serialize_json(std::cout, "params", params);
+    std::cout << ",\n\t";
+    serialize_json(std::cout, "dim", seq_size);
+    std::cout << ",\n\t";
+    serialize_json(std::cout, "running_time", duration.count());
+    std::cout << ",\n\t";
+    serialize_json(std::cout, "output", seq);
+    std::cout << ",\n\t";
+    serialize_json(std::cout, "merit", merit(seq));
+    // serialize_json(std::cout, "steps", instance.get_requests());
 
-    std::cout << "}";
+    std::cout << "\n}";
 }
 
 ExampleOpt::ExampleOpt(int seq_size, int seed, int nb_iter) :
