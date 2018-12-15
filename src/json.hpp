@@ -21,3 +21,4 @@ void serialize_json(std::ostream& stream, const std::string& key, const Sequence
 void serialize_json(std::ostream& stream, const std::string& key, const std::vector<Sequence>& value);
 
 void serialize_json(std::ostream& stream, const std::string& key, const std::map<std::string, double> &value);
+void serialize_json(std::ostream& stream, const std::string& key, const std::vector<std::map<std::string, double>> &value);

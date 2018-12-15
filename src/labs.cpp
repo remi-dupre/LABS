@@ -47,14 +47,19 @@ double merit(const Sequence& seq)
 
 LabsInstance::LabsInstance(int seq_size) :
     seq_size(seq_size)
-{}
+{
+    time_start = std::chrono::system_clock::now();
+}
 
 double LabsInstance::eval(const Sequence& seq)
 {
     assert(is_valid_sequence(seq));
     assert((int) seq.size() == seq_size);
 
+    auto time_eval = std::chrono::system_clock::now();
     requests.push_back(seq);
+    requests_timers.push_back(time_eval - time_start);
+
     return merit(seq);
 }
 
@@ -66,4 +71,9 @@ long long int LabsInstance::get_nb_requests() const
 std::vector<Sequence> LabsInstance::get_requests() const
 {
     return requests;
+}
+
+std::vector<std::chrono::duration<double>> LabsInstance::get_requests_timers() const
+{
+    return requests_timers;
 }

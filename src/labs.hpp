@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cassert>
+#include <chrono>
 #include <vector>
 
 
@@ -48,8 +49,13 @@ public:
      */
     std::vector<Sequence> get_requests() const;
 
+    /* Get the timestamps at which the requests started
+     */
+    std::vector<std::chrono::duration<double>> get_requests_timers() const;
+
 private:
     int seq_size;
+    std::chrono::time_point<std::chrono::system_clock> time_start;
     std::vector<Sequence> requests;
-    long long int request_counter;
+    std::vector<std::chrono::duration<double>> requests_timers;
 };

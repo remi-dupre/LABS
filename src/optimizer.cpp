@@ -33,6 +33,17 @@ void Optimizer::json_benchmark(std::ostream& stream)
 
     const std::chrono::duration<double> duration = end - start;
 
+    // Preprocess steps informations
+    std::vector<std::map<std::string, double>> steps(instance.get_nb_requests());
+
+    auto requests = instance.get_requests();
+    for (size_t i = 0 ; i < requests.size() ; i++)
+        steps[i]["merit"] = merit(requests[i]);
+
+    auto requests_timers = instance.get_requests_timers();
+    for (size_t i = 0 ; i < requests_timers.size() ; i++)
+        steps[i]["time"] = requests_timers[i].count();
+
     // Output result;
     stream << "{\n\t";
     serialize_json(stream, "name", name);
@@ -47,7 +58,7 @@ void Optimizer::json_benchmark(std::ostream& stream)
     stream << ",\n\t";
     serialize_json(stream, "merit", merit(seq));
     stream << ",\n\t";
-    serialize_json(stream, "steps", instance.get_requests());
+    serialize_json(stream, "steps", steps);
     stream << "\n}";
 }
 
