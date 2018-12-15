@@ -1,10 +1,10 @@
 #pragma once
 
 #include <chrono>
+#include <iostream>
 #include <map>
 #include <random>
 #include <string>
-#include <iostream>
 
 #include "json.hpp"
 #include "labs.hpp"
@@ -31,7 +31,7 @@ class Optimizer {
         virtual Sequence run(LabsInstance& instance) = 0;
 
         /* Test routines */
-        void json_benchmark();
+        void json_benchmark(std::ostream& stream);
 
     protected:
 

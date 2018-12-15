@@ -77,7 +77,7 @@ void serialize_json(std::ostream& stream, const std::string& key, const std::vec
 
 void serialize_json(std::ostream& stream, const std::string& key, const std::map<std::string, double> &value)
 {
-    stream << "{" << "\"" << key << "\": ";
+    stream << "\"" << key << "\": {";
 
     bool first = true;
     for (const auto &kv: value) {

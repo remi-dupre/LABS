@@ -23,7 +23,7 @@ Sequence Optimizer::random_sequence()
     return seq;
 }
 
-void Optimizer::json_benchmark()
+void Optimizer::json_benchmark(std::ostream& stream)
 {
     // Run an instance of labs
     const auto start = std::chrono::system_clock::now();
@@ -33,24 +33,22 @@ void Optimizer::json_benchmark()
 
     const std::chrono::duration<double> duration = end - start;
 
-    // Output result
-    std::cout << "{" << std::endl;
-
-    std::cout << "\n\t";
-    serialize_json(std::cout, "name", name);
-    std::cout << ",\n\t";
-    serialize_json(std::cout, "params", params);
-    std::cout << ",\n\t";
-    serialize_json(std::cout, "dim", seq_size);
-    std::cout << ",\n\t";
-    serialize_json(std::cout, "running_time", duration.count());
-    std::cout << ",\n\t";
-    serialize_json(std::cout, "output", seq);
-    std::cout << ",\n\t";
-    serialize_json(std::cout, "merit", merit(seq));
-    // serialize_json(std::cout, "steps", instance.get_requests());
-
-    std::cout << "\n}";
+    // Output result;
+    stream << "{\n\t";
+    serialize_json(stream, "name", name);
+    stream << ",\n\t";
+    serialize_json(stream, "params", params);
+    stream << ",\n\t";
+    serialize_json(stream, "dim", seq_size);
+    stream << ",\n\t";
+    serialize_json(stream, "running_time", duration.count());
+    stream << ",\n\t";
+    serialize_json(stream, "output", seq);
+    stream << ",\n\t";
+    serialize_json(stream, "merit", merit(seq));
+    stream << ",\n\t";
+    serialize_json(stream, "steps", instance.get_requests());
+    stream << "\n}";
 }
 
 ExampleOpt::ExampleOpt(int seq_size, int seed, int nb_iter) :
