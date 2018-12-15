@@ -25,6 +25,12 @@ Sequence Optimizer::random_sequence()
 
 void Optimizer::json_benchmark(std::ostream& stream)
 {
+    std::cout << " - Running `" << name << "`\n    ";
+    serialize_json(std::cout, "N", seq_size);
+    std::cout << "\n    ";
+    serialize_json(std::cout, "params", params);
+    std::cout << std::endl;
+
     // Run an instance of labs
     const auto start = std::chrono::system_clock::now();
     LabsInstance instance(seq_size);
