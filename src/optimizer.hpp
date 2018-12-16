@@ -31,7 +31,7 @@ class Optimizer {
         virtual Sequence run(LabsInstance& instance) = 0;
 
         /* Test routines */
-        void json_benchmark(std::ostream& stream);
+        void json_benchmark(std::ostream& stream, bool light = false);
 
     protected:
 

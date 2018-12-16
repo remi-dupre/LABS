@@ -23,7 +23,7 @@ Sequence Optimizer::random_sequence()
     return seq;
 }
 
-void Optimizer::json_benchmark(std::ostream& stream)
+void Optimizer::json_benchmark(std::ostream& stream, bool light)
 {
     // Prompt some informations
     std::cout << " - Running `" << name << "`\n    ";
@@ -64,8 +64,10 @@ void Optimizer::json_benchmark(std::ostream& stream)
     serialize_json(stream, "output", seq);
     stream << ",\n\t";
     serialize_json(stream, "merit", merit(seq));
-    stream << ",\n\t";
-    serialize_json(stream, "steps", steps);
+    if (!light) {
+        stream << ",\n\t";
+        serialize_json(stream, "steps", steps);
+    }
     stream << "\n}";
 }
 

@@ -30,9 +30,11 @@ int main()
     ExampleOpt(300, rd(), 10000).json_benchmark(ostream);
     ostream << ",\n";
     CorrMax(300, rd(), 10000, 1).json_benchmark(ostream);
-    ostream << ",\n";
-    CorrMax(300, rd(), 10000, 10).json_benchmark(ostream);
-    ostream << ",\n";
-    CorrMax(300, rd(), 10000, 100).json_benchmark(ostream);
+
+    for (int n = 20 ; n <= 400 ; n += 20) {
+        ostream << ",\n";
+        CorrMax(n, rd(), 5000, 1).json_benchmark(ostream, true);
+    }
+
     ostream << "]" << endl;
 }
