@@ -27,16 +27,39 @@ int main()
     random_device rd;
 
     ostream << "[";
-    ExampleOpt(300, rd(), 10000).json_benchmark(ostream);
-    ostream << ",\n";
-    CorrMax(300, rd(), 10000, 1).json_benchmark(ostream);
+
+    /**
+     * Comparing general performances between implementations
+     */
+    ostream << "{\n\t";
+    serialize_json(ostream, "type", "compare");
+    ostream << ",\n\t" << "\"dataset\": [\n\t\t";
+
+    ExampleOpt(300, rd(), 10000).json_benchmark(ostream, false, "\t\t");
+    ostream << ", ";
+    CorrMax(300, rd(), 10000, 1).json_benchmark(ostream, false, "\t\t");
+
+    ostream << "\n\t]\n}, ";
+
+    /**
+     * Testing performances when increasing dimention.
+     */
+    ostream << "{\n\t";
+    serialize_json(ostream, "type", "benchmark");
+    ostream << ",\n\t";
+    serialize_json(ostream, "abciss", "dim");
+    ostream << ",\n\t" << "\"dataset\": [\n\t\t";
 
     for (int n = 20 ; n <= 400 ; n += 20) {
-        ostream << ",\n";
-        CorrMax(n, rd(), 5000, 1).json_benchmark(ostream, true);
-        ostream << ",\n";
-        ExampleOpt(n, rd(), 5000).json_benchmark(ostream, true);
+        CorrMax(n, rd(), 5000, 1).json_benchmark(ostream, true, "\t\t");
+        ostream << ", ";
+        ExampleOpt(n, rd(), 5000).json_benchmark(ostream, true, "\t\t");
+
+        if (n < 400)
+            ostream << ", ";
     }
+
+    ostream << "\n\t]\n}";
 
     ostream << "]" << endl;
 }

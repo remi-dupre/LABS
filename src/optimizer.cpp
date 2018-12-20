@@ -23,7 +23,7 @@ Sequence Optimizer::random_sequence()
     return seq;
 }
 
-void Optimizer::json_benchmark(std::ostream& stream, bool light)
+void Optimizer::json_benchmark(std::ostream& stream, bool light, const std::string& line_prefix)
 {
     // Prompt some informations
     std::cout << " - Running `" << name << "`\n    ";
@@ -52,23 +52,23 @@ void Optimizer::json_benchmark(std::ostream& stream, bool light)
         steps[i]["time"] = requests_timers[i].count();
 
     // Output result;
-    stream << "{\n\t";
+    stream << "{\n" << line_prefix << "\t";
     serialize_json(stream, "name", name);
-    stream << ",\n\t";
+    stream << ",\n" << line_prefix << "\t";
     serialize_json(stream, "params", params);
-    stream << ",\n\t";
+    stream << ",\n" << line_prefix << "\t";
     serialize_json(stream, "dim", seq_size);
-    stream << ",\n\t";
+    stream << ",\n" << line_prefix << "\t";
     serialize_json(stream, "running_time", duration.count());
-    stream << ",\n\t";
+    stream << ",\n" << line_prefix << "\t";
     serialize_json(stream, "output", seq);
-    stream << ",\n\t";
+    stream << ",\n" << line_prefix << "\t";
     serialize_json(stream, "merit", merit(seq));
     if (!light) {
-        stream << ",\n\t";
-        serialize_json(stream, "steps", steps);
+        stream << ",\n" << line_prefix << "\t";
+        serialize_json(stream, "steps", steps, line_prefix);
     }
-    stream << "\n}";
+    stream << "\n" << line_prefix << "}";
 }
 
 ExampleOpt::ExampleOpt(int seq_size, int seed, int nb_iter) :
