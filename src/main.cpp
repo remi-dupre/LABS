@@ -67,5 +67,7 @@ int main()
         tests[2].second.push_back(new CorrMax(300, seed, 5000, n));
     }
 
+    }
+
     run_output_tests(ostream, tests);
 }
