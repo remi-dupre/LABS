@@ -38,6 +38,10 @@ int main()
     ExampleOpt(300, rd(), 10000).json_benchmark(ostream, false, "\t\t");
     ostream << ", ";
     CorrMax(300, rd(), 10000, 1).json_benchmark(ostream, false, "\t\t");
+    ostream << ", ";
+    CorrMax(300, rd(), 10000, 10).json_benchmark(ostream, false, "\t\t");
+    ostream << ", ";
+    CorrMax(300, rd(), 10000, 100).json_benchmark(ostream, false, "\t\t");
 
     ostream << "\n\t]\n}, ";
 
@@ -56,6 +60,23 @@ int main()
         ExampleOpt(n, rd(), 5000).json_benchmark(ostream, true, "\t\t");
 
         if (n < 400)
+            ostream << ", ";
+    }
+
+    ostream << "\n\t]\n},";
+
+    /**
+     * Testing performances when increasing threshold.
+     */
+    ostream << "{\n\t";
+    serialize_json(ostream, "type", "benchmark");
+    ostream << ",\n\t";
+    serialize_json(ostream, "abciss", "threshold");
+    ostream << ",\n\t" << "\"dataset\": [\n\t\t";
+
+    for (int n = 1 ; n <= 1001 ; n += 50) {
+        CorrMax(300, rd(), 5000, n).json_benchmark(ostream, true, "\t\t");
+        if (n < 1000)
             ostream << ", ";
     }
 

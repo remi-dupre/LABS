@@ -3,7 +3,7 @@ import glob
 import matplotlib.pyplot as plt
 
 file_tests = open('../data/tests.json')
-tests = json.loads(file_tests.read())
+tests_set = json.loads(file_tests.read())
 
 def compare_algo(tests):
     dimension_dict = {}
@@ -64,7 +64,7 @@ def evolution_in_dimension(tests):
     plt.xlabel('dimension')
     plt.ylabel('merit')
     plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.12))
-    fig.suptitle('Evolution of the merit of algorithm ' + test['name'] + '\n depending on the dimension', fontsize=12)
+    fig.suptitle('Evolution of the merit of the algorithms ' + '\n depending on the dimension', fontsize=12)
     fig.savefig('../figure/dimension_merit'+'.png', dpi=fig.dpi, bbox_inches='tight')
     fig = plt.figure()
     for algo in algo_dict.keys():
@@ -72,11 +72,37 @@ def evolution_in_dimension(tests):
     plt.xlabel('dimension')
     plt.ylabel('runtime')
     plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.12))
-    fig.suptitle('Evolution of the runtime of algorithm ' + test['name'] + '\n depending on the dimension', fontsize=12)
+    fig.suptitle('Evolution of the runtime of the algorithms ' + '\n depending on the dimension', fontsize=12)
     fig.savefig('../figure/dimension_runtime'+'.png', dpi=fig.dpi, bbox_inches='tight')
 
+def evolution_in_param(param, tests):
+    param_dict = {param : [], 'running_time' : [], 'merit' : []}
+    name = ''
+    for test in tests:
+        name = test['name']
+        param_dict[param].append(test['params'][param])
+        param_dict['running_time'].append(test['running_time'])
+        param_dict['merit'].append(test['merit'])
+    fig = plt.figure()
+    plt.plot(param_dict[param],param_dict['merit'], label=param)
+    plt.xlabel(param)
+    plt.ylabel('merit')
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.12))
+    fig.suptitle('Evolution of the merit of algorithm ' + name + '\n depending on the dimension', fontsize=12)
+    fig.savefig('../figure/param_merit_' + name + '_' + param + '.png', dpi=fig.dpi, bbox_inches='tight')
+    fig = plt.figure()
+    plt.plot(param_dict[param],param_dict['running_time'], label=param)
+    plt.xlabel(param)
+    plt.ylabel('runtime')
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.12))
+    fig.suptitle('Evolution of the runtime of algorithm ' + name + '\n depending on the dimension', fontsize=12)
+    fig.savefig('../figure/dimension_runtime_' + name + '_' + param + '.png', dpi=fig.dpi, bbox_inches='tight')
 
-
-#compare_algo(tests)
-#convergence_in_nb_step(tests)
-evolution_in_dimension(tests)
+for tests in tests_set:
+    if tests['type'] == "compare":
+        compare_algo(tests['dataset'])
+        convergence_in_nb_step(tests['dataset'])
+    if tests['type'] == "benchmark" and tests['abciss'] == "dim":
+        evolution_in_dimension(tests['dataset'])
+    elif tests['type'] == "benchmark":
+        evolution_in_param(tests['abciss'],tests['dataset'])
