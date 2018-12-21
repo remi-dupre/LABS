@@ -9,6 +9,9 @@
 #include "labs.hpp"
 
 
+/**
+ * YOLO JSON primitives
+ */
 void serialize_json(std::ostream& stream, const std::string& key, const std::string& value);
 void serialize_json(std::ostream& stream, const std::string& key, int value);
 void serialize_json(std::ostream& stream, const std::string& key, double value);

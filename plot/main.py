@@ -83,6 +83,7 @@ def evolution_in_param(param, tests):
         param_dict[param].append(test['params'][param])
         param_dict['running_time'].append(test['running_time'])
         param_dict['merit'].append(test['merit'])
+        print('pouet')
     fig = plt.figure()
     plt.plot(param_dict[param],param_dict['merit'], label=param)
     plt.xlabel(param)

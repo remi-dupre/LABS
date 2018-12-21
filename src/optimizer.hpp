@@ -44,7 +44,6 @@ class Optimizer {
 
         int seq_size;  // size of sequences generated
         std::default_random_engine random_engine;  // for randomization
-
 };
 
 
