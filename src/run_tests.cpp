@@ -40,6 +40,8 @@ void run_output_tests(std::ostream& stream, const std::vector<Test>& tests)
                 static_cast<ExampleOpt*>(optimizers[i])->json_benchmark(stream, !with_history, "\t\t");
             if (optimizers[i]->name == "maximize_correlation")
                 static_cast<CorrMax*>(optimizers[i])->json_benchmark(stream, !with_history, "\t\t");
+            if (optimizers[i]->name == "genetic")
+                static_cast<CorrMax*>(optimizers[i])->json_benchmark(stream, !with_history, "\t\t");
 
             if (i + 1 < optimizers.size())
                 stream << ", ";

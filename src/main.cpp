@@ -10,6 +10,7 @@
 #include "labs.hpp"
 #include "optimizer.hpp"
 #include "corr_max.hpp"
+#include "genetic.hpp"
 #include "run_tests.hpp"
 
 using namespace std;
@@ -37,7 +38,8 @@ int main()
             },
             {
                 new ExampleOpt(300, seed, 10000),
-                new CorrMax(300, seed, 10000, 1)
+                new CorrMax(300, seed, 10000, 1),
+                new Genetic(300, seed, 20, 50, 1225)
             }
         },
         // Increasing dimention
@@ -68,6 +70,6 @@ int main()
     }
 
     }
-    
+
     run_output_tests(ostream, tests);
 }
