@@ -68,6 +68,6 @@ int main()
     }
 
     }
-
+    
     run_output_tests(ostream, tests);
 }
