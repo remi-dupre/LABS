@@ -47,6 +47,9 @@ EXEC = simulation
 
 all: release
 
+plot: data/tests.json plot/main.py
+	python plot/main.py
+
 debug: DFLAGS += -ggdb
 debug: $(EXEC)
 
