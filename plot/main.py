@@ -2,7 +2,7 @@ import json
 import glob
 import matplotlib.pyplot as plt
 
-file_tests = open('../data/tests.json')
+file_tests = open('data/tests.json')
 tests_set = json.loads(file_tests.read())
 
 def compare_algo(tests):
@@ -28,7 +28,7 @@ def compare_algo(tests):
         plt.ylabel('merit')
         fig.suptitle('Comparison in results and runtime of the different algorithm')
         #plt.show()
-        fig.savefig('../figure/compare'+str(N)+'.png', dpi=fig.dpi)
+        fig.savefig('figure/compare'+str(N)+'.png', dpi=fig.dpi)
 
 def convergence_in_nb_step(tests):
     step_tests = [x  for x in tests if x['steps'] != {}]
@@ -47,7 +47,7 @@ def convergence_in_nb_step(tests):
         plt.ylabel('merit')
         fig.suptitle('Convergence of the algorithm ' + test['name'])
         #plt.show()
-        fig.savefig('../figure/convergence'+test['name']+'.png', dpi=fig.dpi)
+        fig.savefig('figure/convergence'+test['name']+'.png', dpi=fig.dpi)
 
 def evolution_in_dimension(tests):
     algo_dict = {}
@@ -65,7 +65,7 @@ def evolution_in_dimension(tests):
     plt.ylabel('merit')
     plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.12))
     fig.suptitle('Evolution of the merit of the algorithms ' + '\n depending on the dimension', fontsize=12)
-    fig.savefig('../figure/dimension_merit'+'.png', dpi=fig.dpi, bbox_inches='tight')
+    fig.savefig('figure/dimension_merit'+'.png', dpi=fig.dpi, bbox_inches='tight')
     fig = plt.figure()
     for algo in algo_dict.keys():
         plt.plot(algo_dict[algo]['dimension'],algo_dict[algo]['running_time'], label=algo)
@@ -73,7 +73,7 @@ def evolution_in_dimension(tests):
     plt.ylabel('runtime')
     plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.12))
     fig.suptitle('Evolution of the runtime of the algorithms ' + '\n depending on the dimension', fontsize=12)
-    fig.savefig('../figure/dimension_runtime'+'.png', dpi=fig.dpi, bbox_inches='tight')
+    fig.savefig('figure/dimension_runtime'+'.png', dpi=fig.dpi, bbox_inches='tight')
 
 def evolution_in_param(param, tests):
     param_dict = {param : [], 'running_time' : [], 'merit' : []}
@@ -83,21 +83,20 @@ def evolution_in_param(param, tests):
         param_dict[param].append(test['params'][param])
         param_dict['running_time'].append(test['running_time'])
         param_dict['merit'].append(test['merit'])
-        print('pouet')
     fig = plt.figure()
     plt.plot(param_dict[param],param_dict['merit'], label=param)
     plt.xlabel(param)
     plt.ylabel('merit')
     plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.12))
     fig.suptitle('Evolution of the merit of algorithm ' + name + '\n depending on the dimension', fontsize=12)
-    fig.savefig('../figure/param_merit_' + name + '_' + param + '.png', dpi=fig.dpi, bbox_inches='tight')
+    fig.savefig('figure/param_merit_' + name + '_' + param + '.png', dpi=fig.dpi, bbox_inches='tight')
     fig = plt.figure()
     plt.plot(param_dict[param],param_dict['running_time'], label=param)
     plt.xlabel(param)
     plt.ylabel('runtime')
     plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.12))
     fig.suptitle('Evolution of the runtime of algorithm ' + name + '\n depending on the dimension', fontsize=12)
-    fig.savefig('../figure/dimension_runtime_' + name + '_' + param + '.png', dpi=fig.dpi, bbox_inches='tight')
+    fig.savefig('figure/dimension_runtime_' + name + '_' + param + '.png', dpi=fig.dpi, bbox_inches='tight')
 
 for tests in tests_set:
     if tests['type'] == "compare":
