@@ -7,11 +7,6 @@
     #include <sys/stat.h>
 #endif
 
-#include "labs.hpp"
-#include "optimizer.hpp"
-#include "corr_max.hpp"
-#include "genetic.hpp"
-#include "simulated_annealing.hpp"
 #include "run_tests.hpp"
 
 using namespace std;

@@ -37,9 +37,33 @@ public:
      */
     LabsInstance(int seq_size);
 
-    /* Get the merit factor of a sequence
+    /* Get the merit factor of a sequence (do not use in local mode)
      */
     double eval(const Sequence& seq);
+
+    /* Activate local mode: precompute an oracle on C_k's of adjacent
+     * sequences, then only swapping one bit at once is allowed, this initial
+     * operation takes O(seq_size²) steps to run. It also returns the merit of
+     * the input sequence.
+     *
+     * It can also be used to "jump" to an arbitrary sequence during a run
+     * using local mode.
+     */
+    double init_local_mode(const Sequence& seq);
+
+    /* Exit from local mode
+     */
+    void leave_local_mode();
+
+    /* In local mode, get the energy resulting of spining bit i of the last
+     * submited sequence.
+     */
+    double oracle_merit(int i);
+
+    /* In local mode, spin one bit of the last submitted sequence, output the
+     * resulting sequence, which is now the last submitted sequence.
+     */
+    Sequence swap_spin(int i);
 
     /* Get the number of requests so far
      */
@@ -54,8 +78,30 @@ public:
     std::vector<std::chrono::duration<double>> get_requests_timers() const;
 
 private:
+    /* Update the history with given sequence
+     */
+    void update_history(const Sequence& seq);
+
+    // constant size for the instance of the problem
     int seq_size;
+
+    // Time of creation of the instance
     std::chrono::time_point<std::chrono::system_clock> time_start;
+
+    // History of evaluated sequences
     std::vector<Sequence> requests;
+
+    // History of evaluation timings
     std::vector<std::chrono::duration<double>> requests_timers;
+
+    // If set to true, it means this is running in local mode
+    bool running_local_mode;
+
+    // Count the number of atomic swap run in local mode
+    int count_atomic_swaps;
+
+    // Oracle on the values of C_k if bit i of last evaluated sequence is
+    // swaped
+    std::vector<std::vector<double>> Ck_oracle;
 };
+

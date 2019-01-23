@@ -6,17 +6,16 @@
 #include <algorithm>
 #include <cmath>
 #include <vector>
-#include <utility>
 
-#include "labs.hpp"
 #include "optimizer.hpp"
 
 
-class Simulated_Annealing : public Optimizer {
+class CorrMax : public Optimizer {
     public:
         using Optimizer::run;
 
-        Simulated_Annealing(int seq_size, int seed, int nb_iter = 3000, double threshold = 0.1);
+        CorrMax(int seq_size, int seed, int nb_iter = 1000, int threshold = 1);
 
         Sequence run(LabsInstance& instance);
 };
+

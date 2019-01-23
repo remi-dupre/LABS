@@ -2,8 +2,11 @@
 
 #include "json.hpp"
 
-#include "optimizer.hpp"
-#include "corr_max.hpp"
+#include "optimizers/optimizer.hpp"
+#include "optimizers/corr_max.hpp"
+#include "optimizers/genetic.hpp"
+#include "optimizers/local_random.hpp"
+#include "optimizers/simulated_annealing.hpp"
 
 
 /**
@@ -16,3 +19,4 @@ typedef std::pair<
 
 void json_benchmark(const Optimizer& opt, std::ostream& stream, bool light, const std::string& line_prefix);
 void run_output_tests(std::ostream& stream, const std::vector<Test>& tests);
+

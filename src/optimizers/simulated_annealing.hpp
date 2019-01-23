@@ -8,15 +8,15 @@
 #include <vector>
 #include <utility>
 
-#include "labs.hpp"
 #include "optimizer.hpp"
 
 
-class Genetic : public Optimizer {
+class Simulated_Annealing : public Optimizer {
     public:
         using Optimizer::run;
 
-        Genetic(int seq_size, int seed, int nb_iter = 1000, int nb_parents = 100, int nb_childs = 1000);
+        Simulated_Annealing(int seq_size, int seed, int nb_iter = 3000, double threshold = 0.1);
 
         Sequence run(LabsInstance& instance);
 };
+

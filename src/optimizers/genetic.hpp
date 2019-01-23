@@ -6,16 +6,17 @@
 #include <algorithm>
 #include <cmath>
 #include <vector>
+#include <utility>
 
-#include "labs.hpp"
+
 #include "optimizer.hpp"
 
 
-class CorrMax : public Optimizer {
+class Genetic : public Optimizer {
     public:
         using Optimizer::run;
 
-        CorrMax(int seq_size, int seed, int nb_iter = 1000, int threshold = 1);
+        Genetic(int seq_size, int seed, int nb_iter = 1000, int nb_parents = 100, int nb_childs = 1000);
 
         Sequence run(LabsInstance& instance);
 };

@@ -6,8 +6,8 @@
 #include <random>
 #include <string>
 
-#include "json.hpp"
-#include "labs.hpp"
+#include "../json.hpp"
+#include "../labs.hpp"
 
 
 /* Generic structure of an optimization algorithm.

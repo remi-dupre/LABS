@@ -44,6 +44,8 @@ void run_output_tests(std::ostream& stream, const std::vector<Test>& tests)
                 static_cast<CorrMax*>(optimizers[i])->json_benchmark(stream, !with_history, "\t\t");
             if (optimizers[i]->name == "simulated_annealing")
                 static_cast<CorrMax*>(optimizers[i])->json_benchmark(stream, !with_history, "\t\t");
+            if (optimizers[i]->name == "local_random")
+                static_cast<LocalRandom*>(optimizers[i])->json_benchmark(stream, !with_history, "\t\t");
 
             if (i + 1 < optimizers.size())
                 stream << ", ";
