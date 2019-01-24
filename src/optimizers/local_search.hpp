@@ -10,12 +10,11 @@
 #include "optimizer.hpp"
 
 
-class LocalRandom : public Optimizer {
+class LocalSearch : public Optimizer {
     public:
         using Optimizer::run;
 
-        LocalRandom(int seq_size, int seed, int nb_iter = 1000);
+        LocalSearch(int seq_size, int seed, int nb_iter = 1000);
 
         Sequence run(LabsInstance& instance);
 };
-

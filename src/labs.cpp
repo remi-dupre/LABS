@@ -63,6 +63,8 @@ double LabsInstance::eval(const Sequence& seq)
 
 double LabsInstance::init_local_mode(const Sequence& seq)
 {
+    assert(is_valid_sequence(seq));
+
     running_local_mode = true;
 
     double energy = 0;
@@ -80,7 +82,7 @@ double LabsInstance::init_local_mode(const Sequence& seq)
     }
 
     // Compte initial oracles
-    for (int k = 0 ; k < seq_size ; k++) {
+    for (int k = 1 ; k < seq_size ; k++) {
         for (int i = 0 ; i < seq_size - k ; i++) {
             const double offset = -2 * seq[i] * seq[i+k];
             Ck_oracle[i][k] += offset;
@@ -88,6 +90,7 @@ double LabsInstance::init_local_mode(const Sequence& seq)
         }
     }
 
+    update_history(seq);
     return (seq_size * seq_size) / (2 * energy);
 }
 
@@ -103,8 +106,8 @@ double LabsInstance::oracle_merit(int i)
 
     double energy = 0;
 
-    for (int k = 0 ; k < seq_size ; k++)
-        energy += Ck_oracle[i][k];
+    for (int k = 1 ; k < seq_size ; k++)
+        energy += Ck_oracle[i][k] * Ck_oracle[i][k];
 
     return (seq_size * seq_size) / (2 * energy);
 }
@@ -115,9 +118,14 @@ Sequence LabsInstance::swap_spin(int i)
 
     Sequence last = requests.back();
 
-    for (int k = 0 ; k < seq_size - i ; k++) {
+    for (int k = 1 ; i + k < seq_size ; k++) {
         Ck_oracle[i][k] -= 2 * last[i] * last[i+k];
         Ck_oracle[i+k][k] -= 2 * last[i] * last[i+k];
+    }
+
+    for (int k = 1 ; k <= i ; k++) {
+        Ck_oracle[i][k] -= 2 * last[i] * last[i-k];
+        Ck_oracle[i-k][k] -= 2 * last[i] * last[i-k];
     }
 
     last[i] *= -1;

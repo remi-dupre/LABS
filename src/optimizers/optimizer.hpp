@@ -60,3 +60,4 @@ class ExampleOpt : public Optimizer {
 
     private:
 };
+

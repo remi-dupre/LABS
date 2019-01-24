@@ -33,6 +33,7 @@ int main()
                 {"with_history", "yes"}
             },
             {
+                new LocalSearch(300, seed, 100000),
                 new ExampleOpt(300, seed, 10000),
                 new CorrMax(300, seed, 10000, 1),
                 new Simulated_Annealing(300, seed, 5000, 0.1)
