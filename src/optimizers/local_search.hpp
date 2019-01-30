@@ -14,7 +14,9 @@ class LocalSearch : public Optimizer {
     public:
         using Optimizer::run;
 
-        LocalSearch(int seq_size, int seed, int nb_iter = 1000);
+        LocalSearch(int seq_size, int seed, int nb_iterations = 1000,
+                bool seek_local_maximum = true);
 
         Sequence run(LabsInstance& instance);
 };
+

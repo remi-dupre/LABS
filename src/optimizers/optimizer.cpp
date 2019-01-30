@@ -30,15 +30,21 @@ void Optimizer::json_benchmark(std::ostream& stream, bool light, const std::stri
     serialize_json(std::cout, "N", seq_size);
     std::cout << "\n    ";
     serialize_json(std::cout, "params", params);
-    std::cout << std::endl;
+    std::cout << "\n    ";
 
     // Run an instance of labs
     const auto start = std::chrono::system_clock::now();
     LabsInstance instance(seq_size);
-    const auto seq = run(instance);
-    const auto end = std::chrono::system_clock::now();
 
+    const auto seq = run(instance);
+
+    const auto end = std::chrono::system_clock::now();
     const std::chrono::duration<double> duration = end - start;
+
+    serialize_json(std::cout, "result", merit(seq));
+    std::cout << "\n    ";
+    serialize_json(std::cout, "time", duration.count());
+    std::cout << std::endl;
 
     // Preprocess steps informations
     std::vector<std::map<std::string, double>> steps(instance.get_nb_requests());
@@ -64,10 +70,12 @@ void Optimizer::json_benchmark(std::ostream& stream, bool light, const std::stri
     serialize_json(stream, "output", seq);
     stream << ",\n" << line_prefix << "\t";
     serialize_json(stream, "merit", merit(seq));
+
     if (!light) {
         stream << ",\n" << line_prefix << "\t";
         serialize_json(stream, "steps", steps, line_prefix);
     }
+
     stream << "\n" << line_prefix << "}";
 }
 
