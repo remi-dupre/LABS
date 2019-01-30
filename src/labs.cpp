@@ -10,10 +10,20 @@ bool is_valid_sequence(const Sequence& seq)
     return true;
 }
 
+long long unsigned hash(const Sequence& seq)
+{
+    unsigned result = 0;
+
+    for (int x : seq)
+        result = (3 * result + (x + 1) / 2) % 1000000009;
+
+    return result;
+}
+
 double autocorrelation(const Sequence& seq, int k)
 {
     assert(is_valid_sequence(seq));
-    assert(k >= 0 && k < (int) seq.size());
+    assert(k > 0 && k < (int) seq.size());
 
     double result = 0;
 
@@ -66,72 +76,74 @@ double LabsInstance::init_local_mode(const Sequence& seq)
     assert(is_valid_sequence(seq));
 
     running_local_mode = true;
+    local_current_seq = seq;
 
     double energy = 0;
-    Ck_oracle = std::vector<std::vector<double>>
-        (seq_size, std::vector<double>(seq_size, 0));
+    ck_cached_local = std::vector<double>(seq_size, 0);
 
     // Compute initial autocorrelations
-    for (int k = 0 ; k < seq_size ; k++) {
-        const double autocorr = autocorrelation(seq, k);
-
-        for (int i = 0 ; i < seq_size ; i++)
-            Ck_oracle[i][k] = autocorr;
-
-        energy += Ck_oracle[0][k] * Ck_oracle[0][k];
-    }
-
-    // Compte initial oracles
     for (int k = 1 ; k < seq_size ; k++) {
-        for (int i = 0 ; i < seq_size - k ; i++) {
-            const double offset = -2 * seq[i] * seq[i+k];
-            Ck_oracle[i][k] += offset;
-            Ck_oracle[i+k][k] += offset;
-        }
+        ck_cached_local[k] = autocorrelation(seq, k);
+        energy += std::pow(ck_cached_local[k], 2);
     }
 
-    update_history(seq);
     return (seq_size * seq_size) / (2 * energy);
 }
 
 void LabsInstance::leave_local_mode()
 {
     assert(running_local_mode);
+
     running_local_mode = false;
+}
+
+double LabsInstance::oracle_merit() const
+{
+    assert(running_local_mode);
+
+    double energy = 0;
+
+    for (const double Ck: ck_cached_local)
+        energy += std::pow(Ck, 2);
+
+    return std::pow(seq_size, 2) / (2 * energy);
 }
 
 double LabsInstance::oracle_merit(int i)
 {
     assert(running_local_mode);
 
-    double energy = 0;
-
-    for (int k = 1 ; k < seq_size ; k++)
-        energy += Ck_oracle[i][k] * Ck_oracle[i][k];
-
-    return (seq_size * seq_size) / (2 * energy);
+    swap_spin(i, false);
+    const double merit = oracle_merit();
+    swap_spin(i, false);
+    return merit;
 }
 
-Sequence LabsInstance::swap_spin(int i)
+double LabsInstance::swap_spin(int i, bool history_checkpoint)
 {
     assert(running_local_mode);
 
-    Sequence last = requests.back();
-
-    for (int k = 1 ; i + k < seq_size ; k++) {
-        Ck_oracle[i][k] -= 2 * last[i] * last[i+k];
-        Ck_oracle[i+k][k] -= 2 * last[i] * last[i+k];
+    for (int j = 0 ; j < seq_size; j++) {
+        if (i != j) {
+            const int k = std::abs(i - j);
+            ck_cached_local[k] -= \
+                2 * local_current_seq[i] * local_current_seq[j];
+        }
     }
 
-    for (int k = 1 ; k <= i ; k++) {
-        Ck_oracle[i][k] -= 2 * last[i] * last[i-k];
-        Ck_oracle[i-k][k] -= 2 * last[i] * last[i-k];
-    }
-
-    last[i] *= -1;
-    update_history(last);
     count_atomic_swaps++;
-    return last;
+    local_current_seq[i] *= -1;
+
+    if (history_checkpoint)
+        update_history(local_current_seq);
+
+    return oracle_merit();
+}
+
+Sequence LabsInstance::local_checkpoint()
+{
+    update_history(local_current_seq);
+    return local_current_seq;
 }
 
 long long int LabsInstance::get_nb_requests() const

@@ -19,12 +19,12 @@ Sequence LocalSearch::run(LabsInstance& instance)
 
     for (int i = 0 ; i < params["iterations"] ; i++) {
         const int k = rand_index(random_engine);
-        const double new_merit = instance.oracle_merit(k);
+        const double new_merit = instance.swap_spin(k, false);
 
-        if (new_merit > merit)
+        if (new_merit > merit) {
+            seq = instance.local_checkpoint();
             merit = new_merit;
-
-        seq = instance.swap_spin(k);
+        }
     }
 
     return seq;

@@ -6,6 +6,7 @@
 
 #include <cassert>
 #include <chrono>
+#include <cmath>
 #include <vector>
 
 
@@ -15,6 +16,10 @@ typedef std::vector<char> Sequence;
 /* Verify that a sequence is consistant, it should only contain values 1 or -1.
  */
 bool is_valid_sequence(const Sequence& seq);
+
+/* Return an hash of given sequence
+ */
+long long unsigned hash(const Sequence& seq);
 
 /* Compute the autocorrelation coefficient of order k C_k(seq) of a sequence.
  */
@@ -55,15 +60,23 @@ public:
      */
     void leave_local_mode();
 
+    /* In local mode, get the energy of current sequence */
+    double oracle_merit() const;
+
     /* In local mode, get the energy resulting of spining bit i of the last
      * submited sequence.
      */
     double oracle_merit(int i);
 
     /* In local mode, spin one bit of the last submitted sequence, output the
-     * resulting sequence, which is now the last submitted sequence.
+     * merit of resulting sequence, which is now the last submitted sequence.
      */
-    Sequence swap_spin(int i);
+    double swap_spin(int i, bool history_checkpoint = false);
+
+    /* Add current state of the local mode in the history and return current
+     * sequence.
+     */
+    Sequence local_checkpoint();
 
     /* Get the number of requests so far
      */
@@ -100,8 +113,10 @@ private:
     // Count the number of atomic swap run in local mode
     int count_atomic_swaps;
 
-    // Oracle on the values of C_k if bit i of last evaluated sequence is
-    // swaped
-    std::vector<std::vector<double>> Ck_oracle;
+    // Cache on the values of the C_k while running in local mode
+    std::vector<double> ck_cached_local;
+
+    // Cache on the current sequence while running in local mode
+    Sequence local_current_seq;
 };
 

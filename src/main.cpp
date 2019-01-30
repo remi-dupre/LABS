@@ -33,10 +33,10 @@ int main()
                 {"with_history", "yes"}
             },
             {
-                new LocalSearch(300, seed, 100000),
-                new ExampleOpt(300, seed, 10000),
-                new CorrMax(300, seed, 10000, 1),
-                new Simulated_Annealing(300, seed, 5000, 0.1)
+                new LocalSearch(300, seed, 1000000),
+                 new ExampleOpt(300, seed, 10000),
+                // new CorrMax(300, seed, 10000, 1),
+                // new Simulated_Annealing(300, seed, 5000, 0.1)
 
                 //new Genetic(300, seed, 300, 1000, 3000)
             }
@@ -68,9 +68,9 @@ int main()
     };
 
     for (int n = 20 ; n <= 400 ; n += 20) {
-        tests[1].second.push_back(new CorrMax(n, seed, 5000, 1));
-        tests[1].second.push_back(new ExampleOpt(n, seed, 5000));
-        tests[1].second.push_back(new Simulated_Annealing(n, seed, 5000, 0.1));
+        // tests[1].second.push_back(new CorrMax(n, seed, 5000, 1));
+        // tests[1].second.push_back(new ExampleOpt(n, seed, 5000));
+        // tests[1].second.push_back(new Simulated_Annealing(n, seed, 5000, 0.1));
         //tests[1].second.push_back(new Genetic(n, seed, 100, 300, 3000));
     }
 
