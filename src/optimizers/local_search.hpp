@@ -1,5 +1,6 @@
 /**
- * Randomly walks over the space spining only one bit at once.
+ * Randomly walks over the space spining only one bit at once. It can also seek
+ * for a local maximum after each step.
  */
 #pragma once
 
