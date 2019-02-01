@@ -6,6 +6,7 @@
 #include "optimizers/corr_max.hpp"
 #include "optimizers/genetic.hpp"
 #include "optimizers/local_search.hpp"
+#include "optimizers/local_branching.hpp"
 #include "optimizers/simulated_annealing.hpp"
 
 
@@ -19,3 +20,4 @@ typedef std::pair<
 
 void json_benchmark(const Optimizer& opt, std::ostream& stream, bool light, const std::string& line_prefix);
 void run_output_tests(std::ostream& stream, const std::vector<Test>& tests);
+

@@ -33,6 +33,7 @@ int main()
                 {"with_history", "yes"}
             },
             {
+                new LocalBranching(300, seed, 1),
                 new LocalSearch(300, seed, 1000, true),
                 new ExampleOpt(300, seed, 10000),
                 new CorrMax(300, seed, 10000, 1),
