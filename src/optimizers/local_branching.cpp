@@ -11,7 +11,7 @@ LocalBranching::LocalBranching(int seq_size, int seed, int maximal_depth) :
         {"maximal_depth", maximal_depth}
     };
 }
-#include <iostream>
+
 Sequence LocalBranching::run(LabsInstance& instance)
 {
     current_best_seq = random_sequence();
@@ -25,7 +25,6 @@ Sequence LocalBranching::run(LabsInstance& instance)
     std::shuffle(perm.begin(), perm.end(), random_engine);
     browse_tree(instance, perm);
 
-    std::cout << current_best_merit << '\n';
     return current_best_seq;
 }
 
@@ -54,6 +53,7 @@ void LocalBranching::browse_tree(LabsInstance& instance,
 
     if (noswap_merit > current_best_merit) {
         current_best_merit = noswap_merit;
+        current_best_seq = instance.local_checkpoint();
     }
 }
 
