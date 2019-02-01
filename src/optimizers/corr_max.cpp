@@ -37,7 +37,7 @@ Sequence CorrMax::run(LabsInstance& instance)
         }
 
         for (int i = 0 ; i < seq_size ; i++)
-            contrib[i] = abs(correlation_k + contrib[i]);
+            contrib[i] = std::abs(correlation_k + contrib[i]);
 
         // Select a random candidate among thoose who minimize C_k
         const double best_new_ck = *min_element(contrib.begin(), contrib.end());

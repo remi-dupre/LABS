@@ -60,6 +60,10 @@ void run_output_tests(std::ostream& stream, const std::vector<Test>& tests)
                 static_cast<LocalBranching*>(optimizers[i])->json_benchmark(
                     stream, !with_history, "\t\t");
 
+            if (optimizers[i]->name == "harmonic_search")
+                static_cast<HarmonicSearch*>(optimizers[i])->json_benchmark(
+                    stream, !with_history, "\t\t");
+
             if (i + 1 < optimizers.size())
                 stream << ", ";
         }

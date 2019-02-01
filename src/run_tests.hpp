@@ -5,6 +5,7 @@
 #include "optimizers/optimizer.hpp"
 #include "optimizers/corr_max.hpp"
 #include "optimizers/genetic.hpp"
+#include "optimizers/harmonic_search.hpp"
 #include "optimizers/local_search.hpp"
 #include "optimizers/local_branching.hpp"
 #include "optimizers/simulated_annealing.hpp"

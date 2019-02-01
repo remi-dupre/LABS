@@ -2,7 +2,7 @@
 # Variables
 
 # C++ compiler name
-CXX = g++
+CXX = clang++
 
 # Compiler flags
 CFLAGS = -std=c++14
@@ -53,7 +53,7 @@ plot: data/tests.json plot/main.py
 debug: DFLAGS += -ggdb
 debug: $(EXEC)
 
-release: CFLAGS += -O3 -DNDEBUG
+release: CFLAGS += -O3 -Ofast -DNDEBUG
 release: $(EXEC)
 
 # ==================================================================================================
