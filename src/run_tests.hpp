@@ -1,13 +1,15 @@
 #pragma once
 
+#include <cassert>
+
 #include "json.hpp"
 
-#include "optimizers/optimizer.hpp"
 #include "optimizers/corr_max.hpp"
 #include "optimizers/genetic.hpp"
 #include "optimizers/harmonic_search.hpp"
 #include "optimizers/local_search.hpp"
 #include "optimizers/local_branching.hpp"
+#include "optimizers/optimizer.hpp"
 #include "optimizers/simulated_annealing.hpp"
 
 
@@ -19,6 +21,9 @@ typedef std::pair<
     std::vector<Optimizer*>              // list of optimizers to run
 > Test;
 
-void json_benchmark(const Optimizer& opt, std::ostream& stream, bool light, const std::string& line_prefix);
-void run_output_tests(std::ostream& stream, const std::vector<Test>& tests);
+/* Run tests for all input optimizers and output result in the stream using
+ * json serializer.
+ */
+void run_output_tests(std::ostream& stream, const std::vector<Test>& tests,
+    int nb_tests = 1);
 

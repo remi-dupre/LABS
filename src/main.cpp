@@ -87,5 +87,6 @@ int main()
     }
     */
 
-    run_output_tests(ostream, tests);
+    run_output_tests(ostream, tests, 10);
 }
+

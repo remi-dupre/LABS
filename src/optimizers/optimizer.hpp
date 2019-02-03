@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <chrono>
 #include <iostream>
 #include <map>
@@ -31,11 +32,8 @@ class Optimizer {
         virtual Sequence run(LabsInstance& instance) = 0;
 
         /* Test routines */
-        void json_benchmark(
-            std::ostream& stream,
-            bool light = false,
-            const std::string& line_prefix = ""
-        );
+        void json_benchmark(std::ostream& stream, bool light = false,
+            int nb_tests = 1, const std::string& line_prefix = "");
 
     protected:
 
