@@ -31,6 +31,7 @@ Sequence HarmonicSearch::run(LabsInstance& instance)
             seq = instance.local_checkpoint();
         }
         else {
+            instance.local_checkpoint();
             swap_period(instance, period, offset);
         }
     }
