@@ -15,8 +15,8 @@ def compare_algo(tests):
         for p in test['params']:
             name = name + ' ' + '\n' + p + '=' + str(test['params'][p])
         dimension_dict[test['dim']]['name'].append(name)
-        dimension_dict[test['dim']]['running_time'].append(test['running_time'])
-        dimension_dict[test['dim']]['merit'].append(test['merit'])
+        dimension_dict[test['dim']]['running_time'].append(test['mean_time'])
+        dimension_dict[test['dim']]['merit'].append(test['mean_merit'])
     for N in dimension_dict.keys():
         for i in range(len(dimension_dict[N]['merit'])):
             plt.scatter(dimension_dict[N]['running_time'][i],
@@ -56,8 +56,8 @@ def evolution_in_dimension(tests):
             algo_dict[test['name']] = {'dimension':[],'running_time':[],'merit':[]}
         else:
             algo_dict[test['name']]['dimension'].append(test['dim'])
-            algo_dict[test['name']]['running_time'].append(test['running_time'])
-            algo_dict[test['name']]['merit'].append(test['merit'])
+            algo_dict[test['name']]['running_time'].append(test['mean_time'])
+            algo_dict[test['name']]['merit'].append(test['mean_merit'])
     fig = plt.figure()
     for algo in algo_dict.keys():
         plt.plot(algo_dict[algo]['dimension'],algo_dict[algo]['merit'], label=algo)
@@ -81,8 +81,8 @@ def evolution_in_param(param, tests):
     for test in tests:
         name = test['name']
         param_dict[param].append(test['params'][param])
-        param_dict['running_time'].append(test['running_time'])
-        param_dict['merit'].append(test['merit'])
+        param_dict['running_time'].append(test['mean_time'])
+        param_dict['merit'].append(test['mean_merit'])
     fig = plt.figure()
     plt.plot(param_dict[param],param_dict['merit'], label=param)
     plt.xlabel(param)
