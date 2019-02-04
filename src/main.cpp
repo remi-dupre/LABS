@@ -38,8 +38,8 @@ int main()
                 new LocalSearch(300, seed, 1000, true),
                 new ExampleOpt(300, seed, 10000),
                 new CorrMax(300, seed, 10000, 1),
-                new Simulated_Annealing(300, seed, 10000, 0.013)
-                new Genetic(300, seed, 300, 1000, 3000)
+                new Simulated_Annealing(300, seed, 10000, 0.013),
+                new Genetic(300, seed, 300, 100, 300)
             }
         },
         // Increasing dimention
@@ -79,23 +79,11 @@ int main()
         tests[1].second.push_back(new CorrMax(n, seed, 5000, 1));
         tests[1].second.push_back(new ExampleOpt(n, seed, 5000));
         tests[1].second.push_back(new Simulated_Annealing(n, seed, 5000, 0.013));
-        tests[1].second.push_back(new Genetic(n, seed, 100, 300, 3000));
-    }
-
-    /*
-
-    for (int n = 1 ; n <= 1001 ; n += 50) {
-        tests[2].second.push_back(new CorrMax(300, seed, 5000, n));
-    }
-
-    for (int n = 100 ; n <= 1500 ; n += 100) {
-        tests[3].second.push_back(new Genetic(300, seed, 100, n, 3000));
-    }
-    */
-    for (int n = 500 ; n >= 20 ; n -= 10) {
-        tests[4].second.push_back(new  Simulated_Annealing(300, seed, 5000, (double) 1/n));
+        tests[1].second.push_back(new Genetic(n, seed, 100, 500, 1000));
+        tests[1].second.push_back(new HarmonicSearch(n, seed, 50000));
+        tests[1].second.push_back(new LocalBranching(n, seed, 1));
+        tests[1].second.push_back(new LocalSearch(n, seed, 1000, true));
     }
 
     run_output_tests(ostream, tests, 10);
 }
-
