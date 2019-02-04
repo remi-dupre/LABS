@@ -21,7 +21,6 @@ Sequence Genetic::run(LabsInstance& instance)
     double last = 0;
     int nb_same = 0;
     int step = 0;
-    //for (int step = 0 ; step < params["iterations"] ; step++) {
     while(true)
     {
         step++;
@@ -55,7 +54,6 @@ Sequence Genetic::run(LabsInstance& instance)
           if (best == last) nb_same++;
           else nb_same = 0;
           last = best;
-          if (step % 10 == 0) std::cout << "eval " << step << " " << best << std::endl;
 
          if (nb_same > 30) break;
     }
