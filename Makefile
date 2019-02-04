@@ -2,7 +2,7 @@
 # Variables
 
 # C++ compiler name
-CXX = clang++
+CXX = g++
 
 # Compiler flags
 CFLAGS = -std=c++14
