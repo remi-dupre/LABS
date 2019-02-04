@@ -88,14 +88,14 @@ def evolution_in_param(param, tests):
     plt.xlabel(param)
     plt.ylabel('merit')
     plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.12))
-    fig.suptitle('Evolution of the merit of algorithm ' + name + '\n depending on the dimension', fontsize=12)
+    fig.suptitle('Evolution of the merit of algorithm ' + name + '\n depending on the ' + param, fontsize=12)
     fig.savefig('figure/param_merit_' + name + '_' + param + '.png', dpi=fig.dpi, bbox_inches='tight')
     fig = plt.figure()
     plt.plot(param_dict[param],param_dict['running_time'], label=param)
     plt.xlabel(param)
     plt.ylabel('runtime')
     plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.12))
-    fig.suptitle('Evolution of the runtime of algorithm ' + name + '\n depending on the dimension', fontsize=12)
+    fig.suptitle('Evolution of the runtime of algorithm ' + name + '\n depending on the ' + param, fontsize=12)
     fig.savefig('figure/dimension_runtime_' + name + '_' + param + '.png', dpi=fig.dpi, bbox_inches='tight')
 
 for tests in tests_set:
