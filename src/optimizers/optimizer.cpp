@@ -8,6 +8,7 @@ Optimizer::Optimizer(int seq_size, int seed) :
 
 Sequence Optimizer::run()
 {
+    srand (random_engine());
     LabsInstance instance(seq_size);
     return run(instance);
 }

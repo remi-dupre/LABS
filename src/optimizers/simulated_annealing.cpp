@@ -6,7 +6,6 @@ Simulated_Annealing::Simulated_Annealing(int seq_size, int seed, int nb_iter, do
 {
     name = "simulated_annealing";
     params = {
-        {"seed", (int) seed},
         {"iterations", (int) nb_iter},
         {"threshold" , (double) threshold}
     };
@@ -15,25 +14,22 @@ Simulated_Annealing::Simulated_Annealing(int seq_size, int seed, int nb_iter, do
 
 Sequence Simulated_Annealing::run(LabsInstance& instance)
 {
-    srand (params["seed"]);
     Sequence seq = random_sequence();
-    double seq_merit = instance.eval(seq);
+    double seq_merit = instance.init_local_mode(seq);
     Sequence best_seq = seq;
     double best_merit = seq_merit;
 
     for (int step = 0 ; step < params["iterations"] ; step++) {
         int rand_bit = rand() % seq_size;
-        Sequence new_seq = seq;
-        new_seq[rand_bit] = -seq[rand_bit];
-        double new_seq_merit = instance.eval(new_seq);
+        double new_seq_merit = instance.oracle_merit(rand_bit);
 
         if (new_seq_merit >= seq_merit ||
             (new_seq_merit >= seq_merit - params["threshold"] && step < params["iterations"]*0.75)){
-            seq = new_seq;
+            instance.swap_spin(rand_bit, true);
             seq_merit = new_seq_merit;
         }
         if (seq_merit > best_merit){
-            best_seq = seq;
+            best_seq = instance.local_checkpoint();
             best_merit = seq_merit;
         }
     }
