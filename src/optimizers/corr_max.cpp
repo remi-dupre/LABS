@@ -18,7 +18,7 @@ Sequence CorrMax::run(LabsInstance& instance)
 
     for (int step = 0 ; step < 10000 ; step++) {
         // Try to reduce as much as possible a random correlation coefficient
-        std::uniform_int_distribution<int> dist_k(0, seq_size - 1);
+        std::uniform_int_distribution<int> dist_k(1, seq_size - 1);
         const int k = dist_k(random_engine);
         const double correlation_k = autocorrelation(seq, k);
 

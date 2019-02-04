@@ -146,6 +146,11 @@ Sequence LabsInstance::local_checkpoint()
     return local_current_seq;
 }
 
+long long int LabsInstance::get_nb_atomic_swaps() const
+{
+    return count_atomic_swaps;
+}
+
 long long int LabsInstance::get_nb_requests() const
 {
     return requests.size();

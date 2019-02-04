@@ -78,6 +78,8 @@ public:
      */
     Sequence local_checkpoint();
 
+    long long int get_nb_atomic_swaps() const;
+
     /* Get the number of requests so far
      */
     long long int get_nb_requests() const;
@@ -111,7 +113,7 @@ private:
     bool running_local_mode;
 
     // Count the number of atomic swap run in local mode
-    int count_atomic_swaps;
+    long long int count_atomic_swaps;
 
     // Cache on the values of the C_k while running in local mode
     std::vector<double> ck_cached_local;

@@ -42,7 +42,7 @@ void Optimizer::json_benchmark(std::ostream& stream, bool light,
     Sequence best_seq;
     LabsInstance best_instance(seq_size);
     int best_merit = -1, sum_merit = 0;
-    double best_merit_time, sum_time = 0;
+    double best_merit_time = 0, sum_time = 0;
 
     for (int k = 0 ; k < nb_tests ; k++) {
         // Run one instance
@@ -92,6 +92,12 @@ void Optimizer::json_benchmark(std::ostream& stream, bool light,
     serialize_json(stream, "dim", seq_size);
     stream << ",\n" << line_prefix << "\t";
     serialize_json(stream, "running_time", best_merit_time);
+    stream << ",\n" << line_prefix << "\t";
+    serialize_json(stream, "nb_requests",
+        (int) best_instance.get_nb_requests());
+    stream << ",\n" << line_prefix << "\t";
+    serialize_json(stream, "nb_atomic_swaps",
+        (int) best_instance.get_nb_atomic_swaps());
     stream << ",\n" << line_prefix << "\t";
     serialize_json(stream, "output", best_seq);
     stream << ",\n" << line_prefix << "\t";

@@ -33,13 +33,14 @@ int main()
                 {"with_history", "yes"}
             },
             {
-                new HarmonicSearch(300, seed, 50000),
                 new LocalBranching(300, seed, 1),
                 new LocalSearch(300, seed, 1000, true),
+                new HarmonicSearch(300, seed, 50000),
                 new ExampleOpt(300, seed, 10000),
                 new CorrMax(300, seed, 10000, 1),
                 new Simulated_Annealing(300, seed, 10000, 0.013),
                 new Genetic(300, seed, 300, 100, 300)
+                //new Genetic(300, seed, 300, 1000, 3000)
             }
         },
         // Increasing dimention
