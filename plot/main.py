@@ -5,7 +5,7 @@ import matplotlib
 
 file_tests = open('data/tests.json')
 tests_set = json.loads(file_tests.read())
-matplotlib.rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+
 
 def compare_algo(tests):
     dimension_dict = {}
@@ -30,8 +30,8 @@ def compare_algo(tests):
         plt.ylabel('merit')
         #fig.suptitle('Comparison in results and runtime of the different algorithm')
         #plt.show()
-        fig.savefig('figure/compare'+str(N)+'.png', dpi=fig.dpi)
-        fig.savefig('figure/compare'+str(N)+'.pdf', dpi=fig.dpi)
+        fig.savefig('figure/compare_'+str(N)+'.png', dpi=fig.dpi, bbox_inches='tight')
+        fig.savefig('figure/compare_'+str(N)+'.pdf', bbox_inches='tight')
 
 def convergence_in_nb_step(tests):
     step_tests = [x  for x in tests if x['steps'] != {}]
@@ -44,14 +44,14 @@ def convergence_in_nb_step(tests):
         runtime = [ test['steps'][s]['time'] for s in test['steps']]
         merit = [ test['steps'][s]['merit'] for s in test['steps']]
         fig = plt.figure()
-        plt.plot(runtime,result,'b')
-        plt.plot(runtime,merit,'b', alpha=0.3)
+        plt.plot(runtime,merit,'#b2b2ff')
+        plt.plot(runtime,result,'#0000ff')
         plt.xlabel('running time')
         plt.ylabel('merit')
         #fig.suptitle('Convergence of the algorithm ' + test['name'])
         #plt.show()
-        fig.savefig('figure/convergence'+test['name']+'.png', dpi=fig.dpi)
-        fig.savefig('figure/convergence'+test['name']+'.pdf', dpi=fig.dpi)
+        fig.savefig('figure/convergence_'+test['name']+'.png', dpi=fig.dpi, bbox_inches='tight')
+        fig.savefig('figure/convergence_'+test['name']+'.pdf', bbox_inches='tight')
 
 def evolution_in_dimension(tests):
     algo_dict = {}
@@ -70,8 +70,8 @@ def evolution_in_dimension(tests):
     plt.ylabel('mean_merit')
     plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.12))
     #fig.suptitle('Evolution of the mean-merit of the algorithms ' + '\n depending on the dimension', fontsize=12)
-    fig.savefig('figure/dimension_mean_merit'+'.png', dpi=fig.dpi, bbox_inches='tight')
-    fig.savefig('figure/dimension_mean_merit'+'.pdf', dpi=fig.dpi, bbox_inches='tight')
+    fig.savefig('figure/dimension_mean_merit.png', dpi=fig.dpi, bbox_inches='tight')
+    fig.savefig('figure/dimension_mean_merit.pdf', bbox_inches='tight')
     fig = plt.figure()
     for algo in algo_dict.keys():
         plt.plot(algo_dict[algo]['dimension'],algo_dict[algo]['max_merit'], label=algo)
@@ -80,7 +80,7 @@ def evolution_in_dimension(tests):
     plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.12))
     #fig.suptitle('Evolution of the max-merit of the algorithms ' + '\n depending on the dimension', fontsize=12)
     fig.savefig('figure/dimension_max_merit'+'.png', dpi=fig.dpi, bbox_inches='tight')
-    fig.savefig('figure/dimension_max_merit'+'.pdf', dpi=fig.dpi, bbox_inches='tight')
+    fig.savefig('figure/dimension_max_merit.pdf', bbox_inches='tight')
     fig = plt.figure()
     for algo in algo_dict.keys():
         plt.plot(algo_dict[algo]['dimension'],algo_dict[algo]['running_time'], label=algo)
@@ -113,8 +113,8 @@ def evolution_in_param(param, tests):
     plt.ylabel('runtime')
     plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.12))
     #fig.suptitle('Evolution of the runtime of algorithm ' + name + '\n depending on the ' + param, fontsize=12)
-    fig.savefig('figure/dimension_runtime_' + name + '_' + param + '.png', dpi=fig.dpi, bbox_inches='tight')
-    fig.savefig('figure/dimension_runtime_' + name + '_' + param + '.pdf', dpi=fig.dpi, bbox_inches='tight')
+    fig.savefig('figure/dimension_runtime_' + name + '_' + param + '.png', bbox_inches='tight')
+    fig.savefig('figure/dimension_runtime_' + name + '_' + param + '.pdf', bbox_inches='tight')
 
 for tests in tests_set:
     if tests['type'] == "compare":

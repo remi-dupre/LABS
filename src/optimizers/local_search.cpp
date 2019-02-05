@@ -56,6 +56,8 @@ Sequence LocalSearch::run(LabsInstance& instance)
             seq = instance.local_checkpoint();
             merit = new_merit;
         }
+        else
+            instance.local_checkpoint();
     }
 
     return seq;

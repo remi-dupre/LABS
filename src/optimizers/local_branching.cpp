@@ -31,8 +31,10 @@ Sequence LocalBranching::run(LabsInstance& instance)
 void LocalBranching::browse_tree(LabsInstance& instance,
     const std::vector<size_t> &perm, int current_bit, int current_depth)
 {
-    if (current_bit >= seq_size)
+    if (current_bit >= seq_size) {
+        instance.local_checkpoint();
         return;
+    }
 
     const int maximal_depth = params["maximal_depth"];
 
