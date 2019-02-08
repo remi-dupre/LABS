@@ -48,11 +48,15 @@ void run_output_tests(std::ostream& stream, const std::vector<Test>& tests,
                         !with_history, nb_tests, "\t\t");
 
             if (optimizers[i]->name == "genetic")
-                static_cast<CorrMax*>(optimizers[i])->json_benchmark(stream,
+                static_cast<Genetic*>(optimizers[i])->json_benchmark(stream,
+                        !with_history, nb_tests, "\t\t");
+
+            if (optimizers[i]->name == "threshold_localsearch")
+                static_cast<Threshold_Localsearch*>(optimizers[i])->json_benchmark(stream,
                         !with_history, nb_tests, "\t\t");
 
             if (optimizers[i]->name == "simulated_annealing")
-                static_cast<CorrMax*>(optimizers[i])->json_benchmark(stream,
+                static_cast<Simulated_Annealing*>(optimizers[i])->json_benchmark(stream,
                         !with_history, nb_tests, "\t\t");
 
             if (optimizers[i]->name == "local_search")

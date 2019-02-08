@@ -11,12 +11,12 @@
 #include "optimizer.hpp"
 
 
-class Simulated_Annealing : public Optimizer {
+class Threshold_Localsearch : public Optimizer {
     public:
         using Optimizer::run;
 
-        Simulated_Annealing(int seq_size, int seed, int nb_iter = 3000,
-            int temperature = 1000);
+        Threshold_Localsearch(int seq_size, int seed, int nb_iter = 3000,
+            double threshold = 0.01);
 
         Sequence run(LabsInstance& instance);
 };

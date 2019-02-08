@@ -11,6 +11,7 @@
 #include "optimizers/local_branching.hpp"
 #include "optimizers/optimizer.hpp"
 #include "optimizers/simulated_annealing.hpp"
+#include "optimizers/threshold_localsearch.hpp"
 
 
 /**
@@ -26,4 +27,3 @@ typedef std::pair<
  */
 void run_output_tests(std::ostream& stream, const std::vector<Test>& tests,
     int nb_tests = 1);
-
